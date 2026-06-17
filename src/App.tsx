@@ -5,6 +5,8 @@ import { LoginPage } from './pages/LoginPage';
 import { Dashboard } from './pages/Dashboard';
 import { InventarioPage } from './pages/InventarioPage';
 import { VendedoresPage } from './pages/VendedoresPage';
+import { PedidosPage } from './pages/PedidosPage';
+import { CobranzasPage } from './pages/CobranzasPage';
 import { DespachadoresPage } from './pages/DespachadoresPage';
 import { CuentasCobrarPage } from './pages/CuentasCobrarPage';
 import { CuentasPagarPage } from './pages/CuentasPagarPage';
@@ -34,6 +36,22 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <InventarioPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/pedidos"
+        element={
+          <ProtectedRoute>
+            <PedidosPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/cobranzas"
+        element={
+          <ProtectedRoute>
+            <CobranzasPage />
           </ProtectedRoute>
         }
       />

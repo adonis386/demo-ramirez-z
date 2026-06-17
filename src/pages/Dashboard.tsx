@@ -13,11 +13,11 @@ const moduleConfig: Record<string, { key: string; label: string; path: string }>
 
 const quickActions: Record<string, { iconKey: keyof typeof actionIcons; label: string; path: string }[]> = {
   vendedor: [
-    { iconKey: 'nuevoPedido', label: 'Nuevo Pedido', path: '/vendedores' },
-    { iconKey: 'nuevaCobranza', label: 'Nueva Cobranza', path: '/vendedores' },
+    { iconKey: 'nuevoPedido', label: 'Nuevo Pedido', path: '/pedidos' },
+    { iconKey: 'nuevaCobranza', label: 'Nueva Cobranza', path: '/cobranzas' },
   ],
   cobrador: [
-    { iconKey: 'nuevoRecibo', label: 'Nuevo Recibo', path: '/vendedores' },
+    { iconKey: 'nuevoRecibo', label: 'Nuevo Recibo', path: '/cobranzas' },
     { iconKey: 'cartera', label: 'Cartera', path: '/cuentas-cobrar' },
   ],
   despachador: [
@@ -25,8 +25,8 @@ const quickActions: Record<string, { iconKey: keyof typeof actionIcons; label: s
     { iconKey: 'miCamion', label: 'Mi Camión', path: '/inventario' },
   ],
   gerencia: [
-    { iconKey: 'aprobarPedidos', label: 'Aprobar Pedidos', path: '/vendedores' },
-    { iconKey: 'aprobarCobros', label: 'Aprobar Cobros', path: '/cuentas-cobrar' },
+    { iconKey: 'aprobarPedidos', label: 'Aprobar Pedidos', path: '/pedidos' },
+    { iconKey: 'aprobarCobros', label: 'Aprobar Cobros', path: '/cobranzas' },
     { iconKey: 'pagarProveedor', label: 'Pagar Proveedor', path: '/cuentas-pagar' },
   ],
 };

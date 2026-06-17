@@ -41,8 +41,8 @@ export const roleLabels: Record<Role, string> = {
 };
 
 export const roleModules: Record<Role, string[]> = {
-  vendedor: ['inventario', 'vendedores', 'cuentas-cobrar'],
-  cobrador: ['vendedores', 'cuentas-cobrar'],
+  vendedor: ['inventario', 'cuentas-cobrar'],
+  cobrador: ['cuentas-cobrar'],
   despachador: ['inventario', 'despachadores'],
   gerencia: ['inventario', 'vendedores', 'despachadores', 'cuentas-cobrar', 'cuentas-pagar'],
 };

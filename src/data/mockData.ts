@@ -17,7 +17,7 @@ export const users: User[] = [
   { id: 'u1', name: 'Carlos Mendoza', role: 'vendedor', zone: 'Zona Norte' },
   { id: 'u2', name: 'María López', role: 'cobrador', zone: 'Zona Norte' },
   { id: 'u3', name: 'José Ramírez', role: 'despachador', zone: 'Ruta A' },
-  { id: 'u4', name: 'Ana Administración', role: 'gerencia' },
+  { id: 'u4', name: 'Yohan Ramirez', role: 'gerencia' },
 ];
 
 export const products: Product[] = [
