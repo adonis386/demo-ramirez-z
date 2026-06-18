@@ -1,10 +1,12 @@
 import { createContext, useContext, useState, type ReactNode } from 'react';
 import type { Role, User } from '../types';
 import { users } from '../data/mockData';
+import demoAuth from '../data/demoAuth.json';
 
 interface AuthContextValue {
   user: User | null;
   login: (userId: string) => void;
+  loginDemo: (username: string, password: string) => string | null;
   logout: () => void;
 }
 
@@ -18,10 +20,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (found) setUser(found);
   };
 
+  const loginDemo = (username: string, password: string): string | null => {
+    const match = demoAuth.find(
+      (a) => a.username.toLowerCase() === username.trim().toLowerCase() && a.password === password,
+    );
+    if (!match) return 'Usuario o contraseña incorrectos';
+    setUser({
+      id: 'demo',
+      name: match.name,
+      role: match.role as Role,
+    });
+    return null;
+  };
+
   const logout = () => setUser(null);
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, loginDemo, logout }}>
       {children}
     </AuthContext.Provider>
   );
@@ -41,8 +56,8 @@ export const roleLabels: Record<Role, string> = {
 };
 
 export const roleModules: Record<Role, string[]> = {
-  vendedor: ['inventario', 'cuentas-cobrar'],
+  vendedor: ['mi-camion', 'cuentas-cobrar'],
   cobrador: ['cuentas-cobrar'],
-  despachador: ['inventario', 'despachadores'],
+  despachador: ['despachadores'],
   gerencia: ['inventario', 'vendedores', 'despachadores', 'cuentas-cobrar', 'cuentas-pagar'],
 };

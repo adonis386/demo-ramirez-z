@@ -1,33 +1,33 @@
 import { PageLayout } from '../components/PageLayout';
 import { payables, suppliers, formatCurrency } from '../data/mockData';
-import { invoiceStatusBadge } from '../components/StatusBadge';
+import { noteStatusBadge } from '../components/StatusBadge';
 import { useAuth } from '../context/AuthContext';
 
 export function CuentasPagarPage() {
   const { user } = useAuth();
 
   const totalPendiente = payables.reduce((sum, p) => sum + (p.total - p.paid), 0);
-  const supplierCount = suppliers.length;
 
   return (
-    <PageLayout title="Cuentas por Pagar" subtitle="Proveedores y pagos">
+    <PageLayout title="Cuentas por Pagar" subtitle="Proveedor La Regional">
       <div className="stats-row">
         <div className="stat-card">
           <div className="value">{formatCurrency(totalPendiente)}</div>
           <div className="label">Por pagar</div>
         </div>
         <div className="stat-card">
-          <div className="value">{supplierCount}</div>
-          <div className="label">Proveedores</div>
+          <div className="value">{payables.length}</div>
+          <div className="label">Facturas pendientes</div>
         </div>
       </div>
 
-      <h2 className="section-title" style={{ marginTop: 0 }}>Proveedores</h2>
+      <h2 className="section-title" style={{ marginTop: 0 }}>Proveedor</h2>
       {suppliers.map((sup) => (
         <div key={sup.id} className="list-item">
           <div className="list-item-header">
             <div>
               <div className="list-item-title">{sup.name}</div>
+              <div className="list-item-meta">Razón social: {sup.legalName}</div>
               <div className="list-item-meta">{sup.phone}</div>
             </div>
             <span className="list-item-amount">{formatCurrency(sup.balance)}</span>
@@ -49,7 +49,7 @@ export function CuentasPagarPage() {
                   {pay.invoiceNumber} · Vence: {pay.dueDate}
                 </div>
               </div>
-              {invoiceStatusBadge(pay.status === 'pendiente' ? 'por_cobrar' : pay.status)}
+              {noteStatusBadge(pay.status === 'pendiente' ? 'por_cobrar' : pay.status)}
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>

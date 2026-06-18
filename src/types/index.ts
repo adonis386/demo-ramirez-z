@@ -1,6 +1,6 @@
 export type Role = 'vendedor' | 'cobrador' | 'despachador' | 'gerencia';
 
-export type OrderStatus = 'por_aprobar' | 'aprobado' | 'facturado' | 'despachado';
+export type OrderStatus = 'sin_nota_despacho' | 'con_nota_despacho' | 'despachado';
 export type PaymentStatus = 'sin_aprobar' | 'aprobado' | 'parcial';
 export type InvoiceStatus = 'por_cobrar' | 'parcial' | 'pagado';
 
@@ -43,6 +43,7 @@ export interface Client {
 export interface Supplier {
   id: string;
   name: string;
+  legalName: string;
   phone: string;
   balance: number;
 }
@@ -54,7 +55,7 @@ export interface Collection {
   amount: number;
   date: string;
   status: PaymentStatus;
-  invoiceRef?: string;
+  noteRef?: string;
   collectorId: string;
   collectorName: string;
 }
@@ -79,15 +80,17 @@ export interface OrderItem {
   unitPrice: number;
 }
 
-export interface Receivable {
+export interface DispatchNote {
   id: string;
   clientId: string;
   clientName: string;
-  invoiceNumber: string;
+  noteNumber: string;
+  orderId?: string;
   total: number;
   paid: number;
   status: InvoiceStatus;
   dueDate: string;
+  date: string;
 }
 
 export interface Payable {

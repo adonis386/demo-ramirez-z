@@ -595,3 +595,64 @@ textarea {
   align-items: center;
   gap: 6px;
 }
+
+.list-item--clickable {
+  width: 100%;
+  text-align: left;
+  border: none;
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.list-item--clickable:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-1px);
+}
+
+.login-form {
+  width: 100%;
+  background: var(--color-bg-card);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  margin-bottom: 8px;
+}
+
+.login-form-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 14px;
+  text-align: center;
+  color: var(--color-text);
+}
+
+.field-label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  margin-bottom: 12px;
+}
+
+.field-label input {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  padding: 10px 12px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.field-label input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.login-error {
+  color: var(--color-danger);
+  font-size: 0.82rem;
+  margin-bottom: 10px;
+  text-align: center;
+}

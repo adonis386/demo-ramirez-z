@@ -1,70 +1,64 @@
+import { useNavigate } from 'react-router-dom';
 import { PageLayout } from '../components/PageLayout';
-import { receivables, formatCurrency } from '../data/mockData';
-import { invoiceStatusBadge } from '../components/StatusBadge';
-import { useAuth } from '../context/AuthContext';
+import { getClientsWithDebt, getClientDebt, formatCurrency, clients } from '../data/mockData';
+import { AppIcon } from '../components/AppIcon';
+import { icons } from '../icons';
 
 export function CuentasCobrarPage() {
-  const { user } = useAuth();
-
-  const totalPorCobrar = receivables.reduce((sum, r) => sum + (r.total - r.paid), 0);
-  const totalParcial = receivables.filter((r) => r.status === 'parcial').length;
+  const navigate = useNavigate();
+  const clientsWithDebt = getClientsWithDebt();
+  const totalCartera = clientsWithDebt.reduce((sum, c) => sum + getClientDebt(c.id), 0);
 
   return (
-    <PageLayout title="Cuentas por Cobrar" subtitle="Facturas y abonos">
+    <PageLayout title="Cuentas por Cobrar" subtitle="Clientes con saldo pendiente">
       <div className="stats-row">
         <div className="stat-card">
-          <div className="value">{formatCurrency(totalPorCobrar)}</div>
-          <div className="label">Saldo pendiente</div>
+          <div className="value">{formatCurrency(totalCartera)}</div>
+          <div className="label">Cartera total</div>
         </div>
         <div className="stat-card">
-          <div className="value">{totalParcial}</div>
-          <div className="label">Con abono parcial</div>
+          <div className="value">{clientsWithDebt.length}</div>
+          <div className="label">Clientes con deuda</div>
         </div>
       </div>
 
       <p className="list-item-meta" style={{ marginBottom: 12 }}>
-        Soporta abonos parciales: la factura queda en &quot;por cobrar&quot; con el monto pagado reflejado.
+        Seleccione un cliente para ver sus notas de despacho pendientes por cancelar.
       </p>
 
-      {receivables.map((rec) => {
-        const pct = rec.total > 0 ? (rec.paid / rec.total) * 100 : 0;
-        const pending = rec.total - rec.paid;
+      {clientsWithDebt.length === 0 && (
+        <div className="empty-state">
+          <div className="icon">✓</div>
+          <p>No hay clientes con saldo pendiente</p>
+        </div>
+      )}
 
+      {clientsWithDebt.map((client) => {
+        const debt = getClientDebt(client.id);
         return (
-          <div key={rec.id} className="list-item">
+          <button
+            key={client.id}
+            type="button"
+            className="list-item list-item--clickable"
+            onClick={() => navigate(`/cuentas-cobrar/${client.id}`)}
+          >
             <div className="list-item-header">
               <div>
-                <div className="list-item-title">{rec.clientName}</div>
-                <div className="list-item-meta">
-                  {rec.invoiceNumber} · Vence: {rec.dueDate}
-                </div>
+                <div className="list-item-title">{client.name}</div>
+                <div className="list-item-meta">{client.zone} · {client.phone}</div>
               </div>
-              {invoiceStatusBadge(rec.status)}
+              <AppIcon icon={icons.chevronRight} size="sm" color="primary" />
             </div>
-
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-              <span className="list-item-meta">Total: {formatCurrency(rec.total)}</span>
-              <span className="list-item-meta">Pagado: {formatCurrency(rec.paid)}</span>
-            </div>
-
-            <div className="progress-bar">
-              <div className="progress-fill" style={{ width: `${pct}%` }} />
-            </div>
-
-            {pending > 0 && (
-              <div className="list-item-amount" style={{ marginTop: 8 }}>
-                Pendiente: {formatCurrency(pending)}
-              </div>
-            )}
-
-            {user?.role === 'gerencia' && rec.status !== 'pagado' && (
-              <button type="button" className="btn btn-primary btn-block" style={{ marginTop: 10 }}>
-                Registrar abono
-              </button>
-            )}
-          </div>
+            <div className="list-item-amount">Deuda total: {formatCurrency(debt)}</div>
+          </button>
         );
       })}
+
+      {clients.filter((c) => getClientDebt(c.id) === 0).length > 0 && (
+        <p className="list-item-meta" style={{ marginTop: 16, textAlign: 'center' }}>
+          {clients.filter((c) => getClientDebt(c.id) === 0).length} cliente(s) al día
+        </p>
+      )}
     </PageLayout>
   );
 }

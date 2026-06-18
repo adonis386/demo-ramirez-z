@@ -37,3 +37,7 @@ dev-dist/
 
 # Cursor assets (generated images)
 assets/
+
+# Catalog reference (local only)
+Catalogo AUTOVENTA NACIONAL.-15.pdf
+*.pdf

@@ -20,10 +20,12 @@ export function StatusBadge({ label, variant }: StatusBadgeProps) {
 
 export function orderStatusBadge(status: string) {
   const map: Record<string, { label: string; variant: BadgeVariant }> = {
-    por_aprobar: { label: 'Por aprobar', variant: 'pending' },
-    aprobado: { label: 'Aprobado', variant: 'approved' },
-    facturado: { label: 'Facturado', variant: 'paid' },
+    sin_nota_despacho: { label: 'Sin N.D.', variant: 'pending' },
+    con_nota_despacho: { label: 'Con N.D.', variant: 'approved' },
     despachado: { label: 'Despachado', variant: 'delivered' },
+    por_aprobar: { label: 'Sin N.D.', variant: 'pending' },
+    aprobado: { label: 'Con N.D.', variant: 'approved' },
+    facturado: { label: 'Con N.D.', variant: 'approved' },
   };
   const cfg = map[status] ?? { label: status, variant: 'pending' as BadgeVariant };
   return <StatusBadge label={cfg.label} variant={cfg.variant} />;
@@ -39,18 +41,18 @@ export function paymentStatusBadge(status: string) {
   return <StatusBadge label={cfg.label} variant={cfg.variant} />;
 }
 
-export function invoiceStatusBadge(status: string) {
+export function noteStatusBadge(status: string) {
   const map: Record<string, { label: string; variant: BadgeVariant }> = {
     por_cobrar: { label: 'Por cobrar', variant: 'pending' },
     parcial: { label: 'Abono parcial', variant: 'partial' },
     pagado: { label: 'Pagado', variant: 'paid' },
     pendiente: { label: 'Pendiente', variant: 'pending' },
-    pagado_cp: { label: 'Pagado', variant: 'paid' },
   };
-  const key = status === 'pagado' ? 'pagado' : status;
-  const cfg = map[key] ?? { label: status, variant: 'pending' as BadgeVariant };
+  const cfg = map[status] ?? { label: status, variant: 'pending' as BadgeVariant };
   return <StatusBadge label={cfg.label} variant={cfg.variant} />;
 }
+
+export const invoiceStatusBadge = noteStatusBadge;
 
 export function deliveryStatusBadge(status: string) {
   const map: Record<string, { label: string; variant: BadgeVariant }> = {

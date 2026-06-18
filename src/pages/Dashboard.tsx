@@ -5,6 +5,7 @@ import { actionIcons, icons, moduleIcons } from '../icons';
 
 const moduleConfig: Record<string, { key: string; label: string; path: string }> = {
   inventario: { key: 'inventario', label: 'Inventario', path: '/inventario' },
+  'mi-camion': { key: 'mi-camion', label: 'Mi Camión', path: '/mi-camion' },
   vendedores: { key: 'vendedores', label: 'Vendedores', path: '/vendedores' },
   despachadores: { key: 'despachadores', label: 'Despachadores', path: '/despachadores' },
   'cuentas-cobrar': { key: 'cuentas-cobrar', label: 'Cuentas por Cobrar', path: '/cuentas-cobrar' },
@@ -15,6 +16,7 @@ const quickActions: Record<string, { iconKey: keyof typeof actionIcons; label: s
   vendedor: [
     { iconKey: 'nuevoPedido', label: 'Nuevo Pedido', path: '/pedidos' },
     { iconKey: 'nuevaCobranza', label: 'Nueva Cobranza', path: '/cobranzas' },
+    { iconKey: 'miCamion', label: 'Mi Camión', path: '/mi-camion' },
   ],
   cobrador: [
     { iconKey: 'nuevoRecibo', label: 'Nuevo Recibo', path: '/cobranzas' },
@@ -22,11 +24,11 @@ const quickActions: Record<string, { iconKey: keyof typeof actionIcons; label: s
   ],
   despachador: [
     { iconKey: 'verRadar', label: 'Ver Radar', path: '/despachadores' },
-    { iconKey: 'miCamion', label: 'Mi Camión', path: '/inventario' },
+    { iconKey: 'miCamion', label: 'Mi Camión', path: '/mi-camion' },
   ],
   gerencia: [
-    { iconKey: 'aprobarPedidos', label: 'Aprobar Pedidos', path: '/pedidos' },
-    { iconKey: 'aprobarCobros', label: 'Aprobar Cobros', path: '/cobranzas' },
+    { iconKey: 'nuevoPedido', label: 'Pedidos', path: '/pedidos' },
+    { iconKey: 'aprobarCobros', label: 'Cobranzas', path: '/cobranzas' },
     { iconKey: 'pagarProveedor', label: 'Pagar Proveedor', path: '/cuentas-pagar' },
   ],
 };
@@ -76,30 +78,34 @@ export function Dashboard() {
         </>
       )}
 
-      <h2 className="section-title">Módulos</h2>
-      <div className="card-grid card-grid-2">
-        {modules.map((mod) => {
-          const { icon, color } = moduleIcons[mod.key];
-          return (
-            <button
-              key={mod.path}
-              type="button"
-              className="module-card"
-              onClick={() => navigate(mod.path)}
-            >
-              <span className="icon">
-                <AppIcon icon={icon} size="md" color={color} />
-              </span>
-              <span className="label">{mod.label}</span>
-            </button>
-          );
-        })}
-      </div>
+      {modules.length > 0 && (
+        <>
+          <h2 className="section-title">Módulos</h2>
+          <div className="card-grid card-grid-2">
+            {modules.map((mod) => {
+              const { icon, color } = moduleIcons[mod.key];
+              return (
+                <button
+                  key={mod.path}
+                  type="button"
+                  className="module-card"
+                  onClick={() => navigate(mod.path)}
+                >
+                  <span className="icon">
+                    <AppIcon icon={icon} size="md" color={color} />
+                  </span>
+                  <span className="label">{mod.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </>
+      )}
 
       <div style={{ marginTop: 24 }}>
         <div className="info-banner">
           <AppIcon icon={icons.mobile} size="xs" color="primary" />
-          <span>Sistema administrativo móvil para despacho de cervezas</span>
+          <span>Sistema administrativo móvil para despacho de cervezas Zulia</span>
         </div>
       </div>
 

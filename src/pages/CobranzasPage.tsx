@@ -47,9 +47,9 @@ export function CobranzasPage() {
             {paymentStatusBadge(col.status)}
           </div>
           <div className="list-item-amount">{formatCurrency(col.amount)}</div>
-          {col.invoiceRef && (
+          {col.noteRef && (
             <div className="list-item-meta" style={{ marginTop: 4 }}>
-              Factura: {col.invoiceRef}
+              Nota: {col.noteRef}
             </div>
           )}
           {isGerencia && col.status === 'sin_aprobar' && (

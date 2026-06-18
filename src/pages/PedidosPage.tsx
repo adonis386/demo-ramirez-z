@@ -5,15 +5,15 @@ import { useAuth } from '../context/AuthContext';
 
 export function PedidosPage() {
   const { user } = useAuth();
-  const pendingOrders = orders.filter((o) => o.status === 'por_aprobar').length;
-  const isGerencia = user?.role === 'gerencia';
+  const sinNota = orders.filter((o) => o.status === 'sin_nota_despacho').length;
+  const canEmitNote = user?.role === 'gerencia' || user?.role === 'vendedor';
 
   return (
-    <PageLayout title="Pedidos" subtitle={isGerencia ? 'Aprobación y seguimiento' : 'Registro de pedidos'}>
+    <PageLayout title="Pedidos" subtitle="Gestión de pedidos y notas de despacho">
       <div className="stats-row">
         <div className="stat-card">
-          <div className="value">{pendingOrders}</div>
-          <div className="label">Pedidos por aprobar</div>
+          <div className="value">{sinNota}</div>
+          <div className="label">Pedidos sin Notas de Despacho</div>
         </div>
         <div className="stat-card">
           <div className="value">{orders.length}</div>
@@ -28,7 +28,7 @@ export function PedidosPage() {
       )}
 
       <p className="list-item-meta" style={{ marginBottom: 12 }}>
-        Flujo: primero cobranza, luego pedido → envío a la nube con estado &quot;por aprobar&quot;
+        Flujo: primero cobranza, luego pedido → emitir nota de despacho para entregar mercancía.
       </p>
 
       {orders.map((order) => (
@@ -55,9 +55,9 @@ export function PedidosPage() {
               <span className="list-item-meta">Cobro: {order.collectionId}</span>
             )}
           </div>
-          {isGerencia && order.status === 'por_aprobar' && (
+          {canEmitNote && order.status === 'sin_nota_despacho' && (
             <button type="button" className="btn btn-primary btn-block" style={{ marginTop: 10 }}>
-              Aprobar y facturar
+              Emitir Nota de Despacho
             </button>
           )}
         </div>

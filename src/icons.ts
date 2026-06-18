@@ -24,6 +24,7 @@ import {
   faBoxOpen,
   faRotateLeft,
   faUser,
+  faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
 import type { IconColor } from './components/AppIcon';
 
@@ -52,6 +53,7 @@ export const icons = {
   boxOpen: faBoxOpen,
   return: faRotateLeft,
   user: faUser,
+  chevronRight: faChevronRight,
 } as const satisfies Record<string, IconDefinition>;
 
 export const moduleIcons: Record<
@@ -59,6 +61,7 @@ export const moduleIcons: Record<
   { icon: IconDefinition; color: IconColor }
 > = {
   inventario: { icon: icons.boxes, color: 'primary' },
+  'mi-camion': { icon: icons.truckFast, color: 'primary' },
   vendedores: { icon: icons.cart, color: 'success' },
   despachadores: { icon: icons.truck, color: 'warning' },
   'cuentas-cobrar': { icon: icons.handDollar, color: 'info' },

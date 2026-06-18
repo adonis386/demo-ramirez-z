@@ -9,7 +9,7 @@ export function VendedoresPage() {
   const [tab, setTab] = useState<'pedidos' | 'cobranzas'>('pedidos');
   const { user } = useAuth();
 
-  const pendingOrders = orders.filter((o) => o.status === 'por_aprobar').length;
+  const pendingOrders = orders.filter((o) => o.status === 'sin_nota_despacho').length;
   const pendingCollections = collections.filter((c) => c.status === 'sin_aprobar').length;
 
   return (
@@ -20,7 +20,7 @@ export function VendedoresPage() {
       <div className="stats-row">
         <div className="stat-card">
           <div className="value">{pendingOrders}</div>
-          <div className="label">Pedidos por aprobar</div>
+          <div className="label">Sin nota de despacho</div>
         </div>
         <div className="stat-card">
           <div className="value">{pendingCollections}</div>
@@ -74,9 +74,9 @@ export function VendedoresPage() {
                   <span className="list-item-meta">Cobro: {order.collectionId}</span>
                 )}
               </div>
-              {user?.role === 'gerencia' && order.status === 'por_aprobar' && (
+              {user?.role === 'gerencia' && order.status === 'sin_nota_despacho' && (
                 <button type="button" className="btn btn-primary btn-block" style={{ marginTop: 10 }}>
-                  Aprobar y facturar
+                  Emitir Nota de Despacho
                 </button>
               )}
             </div>
@@ -101,9 +101,9 @@ export function VendedoresPage() {
                 {paymentStatusBadge(col.status)}
               </div>
               <div className="list-item-amount">{formatCurrency(col.amount)}</div>
-              {col.invoiceRef && (
+              {col.noteRef && (
                 <div className="list-item-meta" style={{ marginTop: 4 }}>
-                  Factura: {col.invoiceRef}
+                  Nota: {col.noteRef}
                 </div>
               )}
               {user?.role === 'gerencia' && col.status === 'sin_aprobar' && (
